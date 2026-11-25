@@ -5,9 +5,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Unzip project
+      - name: Unzip and patch project
         run: |
           unzip -o tornado-mod.zip
+          sed -i 's/this.setInvulnerable(true);/\/\/ invulnerable/g' src/main/java/net/tornadomod/TornadoEntity.java
+          sed -i 's/e.hurtMarked = true;/e.needsSync = true;/g' src/main/java/net/tornadomod/TornadoEntity.java
           chmod +x gradlew || true
       - uses: actions/setup-java@v4
         with:
